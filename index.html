@@ -3,142 +3,178 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Van G. Adams | Gamer Profile</title>
+    <title>Van G. Adams | Protocol Dashboard</title>
     <style>
         :root {
+            --tceq-blue: #003366; 
             --neon-blue: #00d2ff;
-            --neon-red: #ff0055;
-            --dark-bg: #0a0a12;
-            --card-bg: #161625;
+            --polo-red: #cc0000;
+            --dark-bg: #05050a;
+            --card-bg: #101018;
         }
 
         body {
             background-color: var(--dark-bg);
             color: white;
-            font-family: 'Orbitron', sans-serif; /* Modern Gamer Font */
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin: 0;
-            padding: 20px;
         }
 
-        /* The Gamer Card */
-        .gamer-card {
-            width: 320px;
+        /* Navigation Tabs */
+        nav {
+            display: flex;
             background: var(--card-bg);
-            border: 2px solid var(--neon-blue);
-            border-radius: 15px;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 0 20px var(--neon-blue);
-            margin-bottom: 30px;
+            width: 100%;
+            justify-content: center;
+            border-bottom: 2px solid var(--tceq-blue);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
-        .profile-img {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            border: 3px solid var(--neon-red);
-            object-fit: cover;
+        .tab-btn {
+            padding: 15px 20px;
+            color: #888;
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-weight: bold;
+            transition: 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        .stat-bar {
-            background: #333;
-            height: 10px;
-            border-radius: 5px;
-            margin: 10px 0;
-            overflow: hidden;
-        }
-
-        .stat-fill {
-            background: var(--neon-blue);
-            height: 100%;
-            width: 85%; /* Van's Power Level */
-        }
-
-        /* Buttons */
-        .btn {
-            display: block;
-            width: 80%;
-            margin: 10px auto;
-            padding: 12px;
-            background: transparent;
-            border: 1px solid var(--neon-blue);
+        .tab-btn.active {
             color: var(--neon-blue);
-            text-decoration: none;
-            border-radius: 5px;
+            border-bottom: 3px solid var(--neon-blue);
+        }
+
+        /* Content Sections */
+        .section { display: none; width: 90%; max-width: 600px; padding: 20px; animation: fadeIn 0.5s; }
+        .section.active { display: block; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Gamer Card Styles */
+        .card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            border: 1px solid var(--tceq-blue);
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.2);
+        }
+        .profile-pic { 
+            width: 150px; 
+            height: 150px; 
+            border-radius: 50%; 
+            border: 3px solid var(--polo-red); 
+            object-fit: cover;
+            margin-bottom: 15px;
+        }
+
+        /* Photo Gallery */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .gallery img { 
+            width: 100%; 
+            height: 150px;
+            border-radius: 8px; 
+            border: 1px solid #333; 
+            object-fit: cover;
             transition: 0.3s;
         }
+        .gallery img:hover { transform: scale(1.05); border-color: var(--neon-blue); }
 
-        .btn:hover {
-            background: var(--neon-blue);
-            color: black;
-            box-shadow: 0 0 15px var(--neon-blue);
+        /* Events Timeline */
+        .event-item {
+            border-left: 3px solid var(--polo-red);
+            padding: 15px;
+            margin-bottom: 20px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 0 10px 10px 0;
         }
+        h3 { color: var(--neon-blue); border-bottom: 1px solid #333; padding-bottom: 5px; }
+        .bio-text { line-height: 1.6; color: #ccc; }
 
-        /* Game Area */
-        #game-container {
-            width: 320px;
-            height: 200px;
-            background: #000;
-            border: 2px dashed var(--neon-red);
-            position: relative;
-            overflow: hidden;
-            margin-top: 20px;
-            cursor: crosshair;
-        }
-
-        #game-target {
-            position: absolute;
-            width: 40px;
-            height: 40px;
-            transition: 0.2s;
-        }
     </style>
 </head>
 <body>
 
-    <div class="gamer-card">
-        <img src="unnamed.jpg" class="profile-img">
-        <h2>VAN GLEN ADAMS</h2>
-        <p style="color: var(--neon-red);">RANK: ELITE ARCHITECT</p>
-        
-        <div class="stat-bar"><div class="stat-fill"></div></div>
-        <p style="font-size: 10px;">XP: 2018 / 9999</p>
+    <nav>
+        <button class="tab-btn active" onclick="openTab('card', event)">Gamer Card</button>
+        <button class="tab-btn" onclick="openTab('bio', event)">Bio</button>
+        <button class="tab-btn" onclick="openTab('photos', event)">Photos</button>
+        <button class="tab-btn" onclick="openTab('events', event)">Events</button>
+    </nav>
 
-        <a href="#" class="btn">ROBLOX: [User]</a>
-        <a href="#" class="btn">STEAM: [User]</a>
+    <div id="card" class="section active">
+        <div class="card">
+            <img src="unnamed.jpg" class="profile-pic" alt="Van">
+            <h2>VAN GLEN ADAMS</h2>
+            <p style="color: var(--neon-blue); font-weight: bold;">RANK: ELITE ARCHITECT</p>
+            
+            <div style="background:#222; height:12px; border-radius:6px; margin:15px 0; border: 1px solid #444;">
+                <div style="background: linear-gradient(90deg, var(--tceq-blue), var(--neon-blue)); width:88%; height:100%; border-radius:6px;"></div>
+            </div>
+            <p style="font-size: 0.9em;">Experience Points: 2018 / 9999 XP</p>
+            <p style="margin-top: 10px;">🎮 Main: <strong>Roblox</strong></p>
+        </div>
     </div>
 
-    <h3>MINI-GAME: CATCH THE GLITCH</h3>
-    <p>Score: <span id="score">0</span></p>
-    <div id="game-container">
-        <img src="unnamed.jpg" id="game-target" style="border-radius: 50%;">
+    <div id="bio" class="section">
+        <h3>User Intelligence Report</h3>
+        <div class="bio-text">
+            <p><strong>Codename:</strong> Van</p>
+            <p><strong>Deployment Date:</strong> 08/21/2018</p>
+            <p><strong>Location:</strong> Austin, TX</p>
+            <hr style="border: 0; border-top: 1px solid #333; margin: 20px 0;">
+            <p>Van is a high-performance specialist in building and tactical gaming. Born in Texas, he has developed a reputation as a Master Architect in the Roblox universe. He enjoys the outdoor parks of Austin when he's not in the command center.</p>
+        </div>
+    </div>
+
+    <div id="photos" class="section">
+        <h3>Photo Archive</h3>
+        <div class="gallery">
+            <img src="unnamed.jpg" alt="Primary Photo">
+            <img src="photo2.jpg" alt="Gallery Photo 2">
+            <img src="photo3.jpg" alt="Gallery Photo 3">
+        </div>
+    </div>
+
+    <div id="events" class="section">
+        <h3>Deployment Schedule</h3>
+        <div class="event-item">
+            <h4>7th Birthday Mission</h4>
+            <p><strong>Date:</strong> August 21, 2025</p>
+            <p><strong>Location:</strong> Austin, TX Headquarters</p>
+            <p>Status: Completed Successfully</p>
+        </div>
+        <div class="event-item" style="border-left-color: var(--neon-blue);">
+            <h4>Level 8 Upgrade Party</h4>
+            <p><strong>Date:</strong> August 21, 2026</p>
+            <p>Status: Loading... [Target Locked]</p>
+        </div>
     </div>
 
     <script>
-        const target = document.getElementById('game-target');
-        const container = document.getElementById('game-container');
-        const scoreEl = document.getElementById('score');
-        let score = 0;
-
-        function moveTarget() {
-            const x = Math.random() * (container.clientWidth - 40);
-            const y = Math.random() * (container.clientHeight - 40);
-            target.style.left = x + 'px';
-            target.style.top = y + 'px';
+        function openTab(tabId, event) {
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(s => s.classList.remove('active'));
+            
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(b => b.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
         }
-
-        target.addEventListener('click', () => {
-            score++;
-            scoreEl.innerText = score;
-            moveTarget();
-        });
-
-        // Start moving
-        setInterval(moveTarget, 1000);
     </script>
-
 </body>
 </html>
